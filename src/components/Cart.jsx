@@ -9,6 +9,7 @@ const Cart = () => {
     const [deleted, setDeleted] = useState(0)
 
     useEffect(() => {
+        console.log(deleted);
         const fetchCart = async () => {
             try {
                 const resp = await api.get(`/perpustakaan/api/v1/cart?user_id=${userid}`)
@@ -44,7 +45,6 @@ const Cart = () => {
 
     return (
         <div className="Cart">
-            {console.log(cart)}
             <div className="row ">
                 {cart.map((cartItem) => (
                     <div key={cartItem.id} className="col-md-4 my-2">

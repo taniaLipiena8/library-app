@@ -27,7 +27,7 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
             <h1>Book Collection List</h1>
             <h3 onClick={changeLayout} >Click here to change to {listLayout === 'table'? 'Card list view' : 'Table list view'}</h3>
             {listLayout === 'table' ?
-                <table className="table">
+                <table className="table" style={{width:'70rem'}}>
                     <thead>
                         <tr>
                             <th scope="col">Image</th>
@@ -43,10 +43,10 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                             books.map((book) => (
                                 <tr key={book.id}>
                                     <td><img src={book.image_m} /></td>
-                                    <td>{book.title}</td>
+                                    <td style={{width:'35rem'}}>{book.title}</td>
                                     <td>{Math.ceil(book.average_ratting)}</td>
                                     <td>{book.stok}</td>
-                                    <td className="homeBtn">
+                                    <td className="homeBtn" >
                                         <button className="viewDetail" onClick={() => handleClick(book.id)}>View Detail</button>
                                         <button className="addCart" onClick={() => handleAdd(book.id)}>{
                                             buttonID === book.id ?
@@ -92,7 +92,7 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                 breakLabel="..."
                 marginPagesDisplayed={3}
                 pageRangeDisplayed={2}
-                pageCount={8}
+                pageCount={15}
                 onPageChange={handlePageClick}
                 containerClassName="pagination"
                 pageClassName="page-item"
