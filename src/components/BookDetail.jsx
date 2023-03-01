@@ -39,8 +39,6 @@ const BookDetail = ({ handleAdd, buttonText, buttonID }) => {
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     );
