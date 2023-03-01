@@ -35,7 +35,7 @@ const BookDetail = ({ handleAdd, buttonText, buttonID }) => {
                             <p className="card-text">Author: {chosenBook.author}</p>
                             <p className="card-text">{chosenBook.publication_year}, publisher: {chosenBook.publisher}</p>
                             <p className="card-text">stok tersedia: {chosenBook.stok}</p>
-                            <a href="#" className="btn btn-primary" onClick={() => handleAdd(chosenBook.id)}>{buttonText === 'Idle' ? 'Add To Cart' : 'Loading...'}</a>
+                            <button className="addCart" onClick={() => handleAdd(chosenBook.id)}>{buttonText === 'Idle' ? 'Add To Cart' : 'Loading...'}</button>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ const Cart = () => {
     const navigate = useNavigate()
     const userid = localStorage.getItem('user_id')
     const [cart, setCart] = useState([])
-    console.log(userid);
+    const [deleted, setDeleted] = useState(0)
 
     useEffect(() => {
         const fetchCart = async () => {
@@ -26,13 +26,14 @@ const Cart = () => {
             }
         }
         fetchCart()
-    }, [])
+    }, [deleted])
 
     const handleDelete = async (id) => {
         try {
             const resp = await api.delete(`/perpustakaan/api/v1/cart?user_id=${userid}&book_id=${id}`)
             if (resp.data.code === 200) {
-                alert(resp.message)
+                alert(resp.data.message)
+                setDeleted(deleted+1)
             }
         } catch (error) {
             alert(error.resp.data.message)
