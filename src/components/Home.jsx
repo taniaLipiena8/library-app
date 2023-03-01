@@ -47,8 +47,8 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                                     <td>{Math.ceil(book.average_ratting)}</td>
                                     <td>{book.stok}</td>
                                     <td className="homeBtn">
-                                        <button onClick={() => handleClick(book.id)}>View Detail</button>
-                                        <button onClick={() => handleAdd(book.id)}>{
+                                        <button className="viewDetail" onClick={() => handleClick(book.id)}>View Detail</button>
+                                        <button className="addCart" onClick={() => handleAdd(book.id)}>{
                                             buttonID === book.id ?
                                                 buttonText === 'Idle' ? 'Add To Cart' : 'Loading...' : 'Add To Cart'}</button>
                                     </td>
@@ -75,8 +75,8 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                                             <p >stok tersedia: {book.stok}</p>
                                         </div>
                                         <div>
-                                            <button className="btn btn-primary" onClick={()=>handleClick(book.id)}>View Detail</button>
-                                            <button className="btn btn-primary" onClick={() => handleAdd(book.id)}>{buttonText === 'Idle' ? 'Add To Cart' : 'Loading...'}</button>
+                                            <button className="viewDetail" onClick={()=>handleClick(book.id)}>View Detail</button>
+                                            <button className="addCart" onClick={() => handleAdd(book.id)}>{buttonText === 'Idle' ? 'Add To Cart' : 'Loading...'}</button>
                                         </div>
 
                                     </div>

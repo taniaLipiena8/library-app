@@ -15,10 +15,15 @@ const Nav = () => {
         <nav className="Nav">
             {auth ?
                 <ul>
-                    <li> <Link to={'/book'}>Daftar buku</Link></li>
-                    <li> <Link to={'/cart'}>Keranjang</Link></li>
-                    <li> Hello, {auth}</li>
-                    <li onClick={onLogOut}> Logout</li>
+                    <div>
+                        <li> <Link to={'/book'}>Daftar buku</Link></li>
+                        <li> <Link to={'/cart'}>Keranjang</Link></li>
+                    </div>
+                    <div>
+                        <li> Hello, {auth}</li>
+                        <li onClick={onLogOut}> Logout</li>
+                    </div>
+
                 </ul> :
                 <ul>
                     <li> <Link to={'/login'}>Daftar buku</Link></li>

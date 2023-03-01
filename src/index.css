@@ -19,16 +19,20 @@ body {
   background-color: #0E4B82;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  
 }
 
 .Nav ul {
   color: #fff;
   list-style-type: none;
   display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Nav div{
+  display: flex;
+  flex-direction: row;
 }
 
 .Nav li {
@@ -128,4 +132,29 @@ body {
 .Home h3:hover, 
 .Home h3:focus{
   cursor: pointer;
+}
+
+.viewDetail{
+  color: forestgreen;
+  background-color: #fff;
+  border-color: forestgreen;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.addCart{
+  color: #fff;
+  background-color: forestgreen;
+  border-color: forestgreen;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.Cart button{
+  color: #fff;
+  background-color: crimson;
+  border-color: crimson;
+  padding: 5px;
+  border-radius: 5px;
+
 }
