@@ -9,7 +9,7 @@ const Cart = () => {
     const [deleted, setDeleted] = useState(0)
 
     useEffect(() => {
-        console.log(deleted);
+        
         const fetchCart = async () => {
             try {
                 const resp = await api.get(`/perpustakaan/api/v1/cart?user_id=${userid}`)

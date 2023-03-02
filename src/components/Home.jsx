@@ -1,6 +1,6 @@
 import ReactPaginate from "react-paginate";
-import { useState, useEffect } from "react";
-import api from '../api/base'
+import { useState} from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 
 const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
@@ -42,7 +42,7 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                         {
                             books.map((book) => (
                                 <tr key={book.id}>
-                                    <td><img src={book.image_m} /></td>
+                                    <td><img src={book.image_m} style={{ height: '200px', width: '130px'}}/></td>
                                     <td style={{width:'35rem'}}>{book.title}</td>
                                     <td>{Math.ceil(book.average_ratting)}</td>
                                     <td>{book.stok}</td>
@@ -62,7 +62,7 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                         <div className="card" style={{ height: '13rem', width: '50rem', margin: '10px' }} key={book.id}>
                             <div className="row">
                                 <div className="col-md-4" >
-                                    <img src={book.image_m} className="card-img" alt="" style={{ height: 'auto', width: '130px', marginLeft:'20px'}} />
+                                    <img src={book.image_m} className="card-img" alt="" style={{ height: '205px', width: '130px', marginLeft:'20px'}} />
                                 </div>
                                 <div className="col-md-8">
                                     <div className="card-body">
