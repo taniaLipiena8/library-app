@@ -11,6 +11,7 @@ import Cart from "./components/Cart";
 function App() {
   const [books, setBooks] = useState([])
   const [pageNumber, setPageNumber] = useState(1)
+  
 
   const booksPerPage = 20
 
@@ -23,6 +24,11 @@ function App() {
   const handlePageClick = (data) => {
     setPageNumber(data.selected + 1)
     console.log(data.selected);
+  }
+
+  const handleCartClick = () => {
+    setPageNumber(1)
+    console.log(pageNumber);
   }
 
   const handleAdd = async (id) => {
@@ -50,7 +56,8 @@ function App() {
       try {
         const response = await api.get(`/perpustakaan/api/v1/book?page=${pageNumber}&limit=${booksPerPage}`)
         if (response.data.code === 200) {
-          setBooks(response.data.data.data_per_page)
+          const newBooks = response.data.data.data_per_page
+          setBooks(newBooks)
 
         } else {
           alert('gagal fetch data')
@@ -68,7 +75,7 @@ function App() {
 
   return (
     <div className="App">
-      <Nav />
+      <Nav handleCartClick={handleCartClick}/>
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path="/book" element={<Home books={books} handlePageClick={handlePageClick} handleAdd={handleAdd} buttonText={buttonText} buttonID={buttonID} />} />

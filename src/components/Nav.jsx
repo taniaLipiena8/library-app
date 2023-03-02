@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 
-const Nav = () => {
+const Nav = ({handleCartClick}) => {
     const auth = localStorage.getItem('username')
     const navigate = useNavigate()
 
@@ -16,8 +16,8 @@ const Nav = () => {
             {auth ?
                 <ul>
                     <div>
-                        <li> <Link to={'/book'}>Daftar buku</Link></li>
-                        <li> <Link to={'/cart'}>Keranjang</Link></li>
+                        <li> <Link to={'/book'} >Daftar buku</Link></li>
+                        <li> <Link to={'/cart'} onClick={handleCartClick}>Keranjang</Link></li>
                     </div>
                     <div>
                         <li> Hello, {auth}</li>
