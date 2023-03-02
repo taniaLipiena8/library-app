@@ -21,6 +21,15 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
         
     }
 
+    const changeButtonText=(id)=>{
+        if(id===buttonID){
+            if(buttonText!=='Idle'){
+                return 'Loading...'
+            }
+        }
+        return 'Add To Cart'
+    }
+
     return (
         
         <div className="Home">
@@ -48,9 +57,7 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                                     <td>{book.stok}</td>
                                     <td className="homeBtn" >
                                         <button className="viewDetail" onClick={() => handleClick(book.id)}>View Detail</button>
-                                        <button className="addCart" onClick={() => handleAdd(book.id)}>{
-                                            buttonID === book.id ?
-                                                buttonText === 'Idle' ? 'Add To Cart' : 'Loading...' : 'Add To Cart'}</button>
+                                        <button className="addCart" onClick={() => handleAdd(book.id)}>{changeButtonText(book.id)}</button>
                                     </td>
                                 </tr>
                             ))
@@ -76,7 +83,7 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                                         </div>
                                         <div>
                                             <button className="viewDetail" onClick={()=>handleClick(book.id)}>View Detail</button>
-                                            <button className="addCart" onClick={() => handleAdd(book.id)}>{buttonText === 'Idle' ? 'Add To Cart' : 'Loading...'}</button>
+                                            <button className="addCart" onClick={() => handleAdd(book.id)}>{changeButtonText(book.id)}</button>
                                         </div>
 
                                     </div>
