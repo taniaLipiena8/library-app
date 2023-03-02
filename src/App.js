@@ -38,7 +38,6 @@ function App() {
         alert(response.data.message)
         setButtonText('Idle')
         setButtonID(null)
-        navigate('/cart')
       }
     }
     catch (error) {
