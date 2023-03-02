@@ -51,11 +51,11 @@ const Cart = () => {
                         <div className="card shadow-sm" style={{ height: '250px' }}>
                             <div className="card-body">
                                 <div className="row">
-                                    <div className="col">
+                                    <div className="col-md-4">
                                         <img src={cartItem.image_m} />
                                     </div>
-                                    <div className="col">
-                                        <h5 className="card-subtitle mb-2 text-left">
+                                    <div className="col-md-8">
+                                        <h5 className="card-subtitle mb-2 text-left" style={{ minHeight: '125px' }}>
                                             {cartItem.title}
                                         </h5>
                                         <p className="card-text">sisa stok: {cartItem.stok}</p>

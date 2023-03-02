@@ -59,7 +59,7 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID }) => {
                 </table> :
                 
                     books.map((book) => (
-                        <div className="card" style={{ height: '13rem', width: '50rem' }} key={book.id}>
+                        <div className="card" style={{ height: '13rem', width: '50rem', margin: '10px' }} key={book.id}>
                             <div className="row">
                                 <div className="col-md-4" >
                                     <img src={book.image_m} className="card-img" alt="" style={{ height: 'auto', width: '130px', marginLeft:'20px'}} />

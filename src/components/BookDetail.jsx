@@ -22,7 +22,7 @@ const BookDetail = ({ handleAdd, buttonText, buttonID }) => {
     }, [id])
 
     return (
-        <div>
+        <div className="bookDetail">
             <h1>Book Detail</h1>
             <div className="card" style={{ width: '50rem' }}>
                 <div className="row">
