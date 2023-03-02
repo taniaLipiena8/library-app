@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate , Navigate} from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from './api/base'
 import Nav from "./components/Nav";
@@ -6,12 +6,14 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import BookDetail from "./components/BookDetail"
 import Cart from "./components/Cart";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 
 function App() {
   const [books, setBooks] = useState([])
   const [pageNumber, setPageNumber] = useState(1)
-  
+  const [temp, setTemp] = useState(0)
+  const auth = localStorage.getItem('user_id')
 
   const booksPerPage = 20
 
@@ -22,13 +24,8 @@ function App() {
   const navigate = useNavigate()
 
   const handlePageClick = (data) => {
-    setPageNumber(data.selected + 1)
-    console.log(data.selected);
-  }
-
-  const handleCartClick = () => {
-    setPageNumber(1)
-    console.log(pageNumber);
+    setPageNumber(data)
+   
   }
 
   const handleAdd = async (id) => {
@@ -69,18 +66,19 @@ function App() {
 
     }
     fetchBooks()
-  }, [pageNumber])
+  }, [pageNumber, temp])
 
 
 
   return (
     <div className="App">
-      <Nav handleCartClick={handleCartClick}/>
+      <Nav handleCartClick/>
       <Routes>
         <Route path='/login' element={<Login />} />
-        <Route path="/book" element={<Home books={books} handlePageClick={handlePageClick} handleAdd={handleAdd} buttonText={buttonText} buttonID={buttonID} />} />
-        <Route path="/book/:id" element={<BookDetail handleAdd={handleAdd} buttonText={buttonText} buttonID={buttonID} />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/book" element={<PrivateRoute><Home books={books} handlePageClick={handlePageClick} handleAdd={handleAdd} buttonText={buttonText} buttonID={buttonID} pageNumber={pageNumber} /></PrivateRoute>} /> 
+        
+        <Route path="/book/:id" element={<PrivateRoute><BookDetail handleAdd={handleAdd} buttonText={buttonText} buttonID={buttonID} /></PrivateRoute>} />
+        <Route path="/cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
       </Routes>
     </div>
   );
