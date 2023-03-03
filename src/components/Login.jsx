@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState} from "react";
 import api from'../api/base'
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const [user, setUser] = useState([])
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
@@ -19,17 +18,16 @@ const Login = () => {
             })
 
             if(response.data.code === 200){
-                setUser(response.data.data)
                 localStorage.setItem('username', response.data.data.username)
                 localStorage.setItem('user_id', response.data.data.user_id)
                 setEmail('')
                 setPassword('')
-                console.log(response.data.data);
+
                 navigate('/book')
             } else {
                 alert('gagal login')
             }
-            console.log(response.data.message);
+
         } catch ( err) {
             alert(err.response.data.message)
         }

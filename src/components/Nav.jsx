@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Nav = () => {
-    const auth = localStorage.getItem('username')
+    const {username} = useContext(UserContext)
     const navigate = useNavigate()
 
     const onLogOut = () => {
@@ -13,22 +14,17 @@ const Nav = () => {
 
     return (
         <nav className="Nav">
-            {auth ?
+            {username &&
                 <ul>
                     <div>
                         <li> <Link to={'/book'} >Daftar buku</Link></li>
                         <li> <Link to={'/cart'}>Keranjang</Link></li>
                     </div>
                     <div>
-                        <li> Hello, {auth}</li>
-                        <li onClick={onLogOut}> Logout</li>
+                        <li> <a >Hello, {username}</a> </li>
+                        <li onClick={onLogOut}> <a >Logout</a> </li>
                     </div>
 
-                </ul> :
-                <ul>
-                    <li> <Link to={'/login'}>Daftar buku</Link></li>
-                    <li> <Link to={'/login'}>Keranjang</Link></li>
-                    <li> <Link to={'/login'}>Login</Link></li>
                 </ul>
             }
         </nav>

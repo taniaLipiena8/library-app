@@ -6,10 +6,7 @@ function PrivateRoute({ children }) {
     const auth = localStorage.getItem('user_id')
     
     if (!auth) {
-        
         return <Navigate to="/login" />
     }
-
-    
     return children;
 }

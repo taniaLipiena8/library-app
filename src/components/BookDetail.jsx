@@ -1,13 +1,17 @@
-import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useParams} from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import api from '../api/base'
+import { AddBookToCart } from "../services/AddBookToCart"
+import { UserContext } from "../context/UserContext";
 
-const BookDetail = ({ handleAdd, buttonText, buttonID }) => {
+const BookDetail = () => {
     const { id } = useParams()
     const [chosenBook, setChosenBook] = useState({})
+    const {user_id}= useContext(UserContext)
+    const [buttonText, setButtonText] = useState('Idle')
+    const [buttonID, setButtonID] = useState(null)
 
     useEffect(() => {
-        console.log(id);
         const getBookbyID = async () => {
             try {
                 const response = await api.get(`/perpustakaan/api/v1/book/${id}`)
@@ -20,6 +24,19 @@ const BookDetail = ({ handleAdd, buttonText, buttonID }) => {
         }
         getBookbyID()
     }, [id])
+
+    const handleAdd = async () => {
+        try {
+            setButtonID(id)
+            setButtonText('Loading')
+            await AddBookToCart(id, user_id)
+           
+        } catch (error) {
+            alert(error)
+        }
+        setButtonText('Idle')
+        setButtonID(null)
+    }
 
     return (
         <div className="bookDetail">
@@ -35,7 +52,7 @@ const BookDetail = ({ handleAdd, buttonText, buttonID }) => {
                             <p className="card-text">Author: {chosenBook.author}</p>
                             <p className="card-text">{chosenBook.publication_year}, publisher: {chosenBook.publisher}</p>
                             <p className="card-text">stok tersedia: {chosenBook.stok}</p>
-                            <button className="addCart" onClick={() => handleAdd(chosenBook.id)}>{buttonText === 'Idle' ? 'Add To Cart' : 'Loading...'}</button>
+                            <button className="addCart" onClick={() => handleAdd()}>{buttonText === 'Idle' ? 'Add To Cart' : 'Loading...'}</button>
                         </div>
                     </div>
                 </div>

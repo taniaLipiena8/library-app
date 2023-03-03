@@ -1,27 +1,69 @@
-import ReactPaginate from "react-paginate";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import api from '../api/base'
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { PaginationControl } from 'react-bootstrap-pagination-control';
+import BookTableView from "./BookTableView";
+import BookCardView from "./BookCardView";
+import { UserContext } from "../context/UserContext";
+import { AddBookToCart } from "../services/AddBookToCart"
 
-const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID, pageNumber }) => {
+const Home = () => {
     const navigate = useNavigate()
+    const {user_id}= useContext(UserContext)
+    const booksPerPage = 20
     const [listLayout, setListLayout] = useState('table')
+    const [books, setBooks] = useState([])
+    const [pageNumber, setPageNumber] = useState(1)
+    const [buttonText, setButtonText] = useState('Idle')
+    const [buttonID, setButtonID] = useState(null)
 
-    const id = localStorage.getItem('user_id')
-    const [authorized, setAuthorized]= useState(false)
+    useEffect(() => {
+        const fetchBooks = async () => {
+            try {
+                const response = await api.get(`/perpustakaan/api/v1/book?page=${pageNumber}&limit=${booksPerPage}`)
+                if (response.data.code === 200) {
+                    const newBooks = response.data.data.data_per_page
+                    setBooks(newBooks)
+    
+                } else {
+                    alert('gagal fetch data')
+                }
+    
+            } catch (error) {
+                alert(error.response.data.message)
+            }
+        }
+        fetchBooks()
+    }, [pageNumber])
+
+    const handlePageClick = (data) => {
+        setPageNumber(data)
+    }
+
+    const handleAdd = async (id) => {
+        try {
+            setButtonID(id)
+            setButtonText('Loading')
+            await AddBookToCart(id, user_id)
+           
+        } catch (error) {
+            alert(error)
+        }
+        setButtonText('Idle')
+        setButtonID(null)
+    }
+
 
     const handleClick = (id) => {
         navigate(`/book/${id}`)
     }
 
     const changeLayout = () => {
-
         if (listLayout === 'table') {
             setListLayout('card')
             return
         }
         setListLayout('table')
-
     }
 
     const changeButtonText = (id) => {
@@ -36,76 +78,29 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID, pageNum
     return (
 
         <div className="Home">
-           
             <h1>Book Collection List</h1>
             <h3 onClick={changeLayout} >Click here to change to {listLayout === 'table' ? 'Card list view' : 'Table list view'}</h3>
             {listLayout === 'table' ?
-                <table className="table" style={{ width: '70rem' }}>
-                    <thead>
-                        <tr>
-                            <th scope="col">Image</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Avg Rating</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Action</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            books.map((book) => (
-                                <tr key={book.id}>
-                                    <td><img src={book.image_m} style={{ height: '200px', width: '130px' }} alt="book" /></td>
-                                    <td style={{ width: '35rem' }}>{book.title}</td>
-                                    <td>{Math.ceil(book.average_ratting)}</td>
-                                    <td>{book.stok}</td>
-                                    <td className="homeBtn" >
-                                        <button className="viewDetail" onClick={() => handleClick(book.id)}>View Detail</button>
-                                        <button className="addCart" onClick={() => handleAdd(book.id)}>{changeButtonText(book.id)}</button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table> :
-
-                books.map((book) => (
-                    <div className="card" style={{ height: '13rem', width: '50rem', margin: '10px' }} key={book.id}>
-                        <div className="row">
-                            <div className="col-md-4" >
-                                <img src={book.image_m} className="card-img" alt="" style={{ height: '205px', width: '130px', marginLeft: '20px' }} />
-                            </div>
-                            <div className="col-md-8">
-                                <div className="card-body">
-                                    <div className="card-title-first">
-                                        <h5 >{book.title}</h5>
-                                        <p >Average rating: {Math.ceil(book.average_ratting)}</p>
-                                    </div>
-                                    <div className="card-text-first">
-                                        <p className="author">{book.author}</p>
-                                        <p >stok tersedia: {book.stok}</p>
-                                    </div>
-                                    <div>
-                                        <button className="viewDetail" onClick={() => handleClick(book.id)}>View Detail</button>
-                                        <button className="addCart" onClick={() => handleAdd(book.id)}>{changeButtonText(book.id)}</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))
+                <BookTableView books={books} handleAdd={handleAdd} handleClick={handleClick} changeButtonText={changeButtonText} />
+                :
+                <BookCardView books={books} handleAdd={handleAdd} handleClick={handleClick} changeButtonText={changeButtonText} />
             }
             <PaginationControl
                 page={pageNumber}
                 between={3}
                 total={260}
                 limit={20}
-                changePage={(page)=>handlePageClick(page)}
+                changePage={(page) => handlePageClick(page)}
                 ellipsis={1}
             />
-            {/*another way to paginate*/}
-             {/* <ReactPaginate
+        </div>
+    );
+}
+
+export default Home;
+
+{/*another way to paginate
+<ReactPaginate
                 previousLabel={'< previous'}
                 nextLabel={"next >"}
                 breakLabel="..."
@@ -126,9 +121,3 @@ const Home = ({ books, handlePageClick, handleAdd, buttonText, buttonID, pageNum
                 activeLinkClassName=""
                 
             /> */}
-
-        </div>
-    );
-}
-
-export default Home;
